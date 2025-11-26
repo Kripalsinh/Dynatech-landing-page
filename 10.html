@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starter Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+        body{background:#0a0a0a;color:#fff;min-height:100vh}
+        .container{max-width:1100px;margin:0 auto;padding:20px}
+        
+        /* Animated Background */
+        .bg-glow{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:-1}
+        .glow{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.4;animation:pulse 8s infinite alternate}
+        .g1{width:400px;height:400px;background:#10b981;top:-100px;left:-100px}
+        .g2{width:500px;height:500px;background:#0ea5e9;bottom:-150px;right:-150px;animation-delay:-4s}
+        .g3{width:300px;height:300px;background:#8b5cf6;top:50%;left:50%;animation-delay:-2s}
+        @keyframes pulse{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.2) translate(30px,30px)}}
+
+        /* Hero Section */
+        .hero{text-align:center;padding:80px 20px 60px;animation:fadeIn 1s ease}
+        .hero-badge{display:inline-block;background:linear-gradient(135deg,#10b981,#0ea5e9);padding:6px 16px;border-radius:20px;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;animation:slideDown 0.8s ease}
+        .hero h1{font-size:3.2rem;font-weight:700;margin-bottom:15px;animation:slideDown 0.8s ease 0.1s backwards}
+        .hero h1 span{background:linear-gradient(135deg,#10b981,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero p{color:#888;font-size:1.1rem;max-width:500px;margin:0 auto 30px;animation:slideDown 0.8s ease 0.2s backwards}
+        
+        /* User Profile */
+        .user-profile{display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:8px 20px 8px 8px;border-radius:50px;animation:slideDown 0.8s ease 0.3s backwards;transition:0.3s}
+        .user-profile:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px)}
+        .user-avatar{width:40px;height:40px;background:linear-gradient(135deg,#10b981,#0ea5e9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+        .user-profile h4{font-size:0.9rem;font-weight:600}
+        .user-profile span{font-size:0.75rem;color:#888}
+
+        /* Stats Grid */
+        .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:40px 0;animation:fadeIn 1s ease 0.4s backwards}
+        .stat-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:center;transition:0.3s}
+        .stat-card:hover{background:rgba(255,255,255,0.06);transform:translateY(-3px);border-color:rgba(16,185,129,0.3)}
+        .stat-card i{font-size:1.5rem;color:#10b981;margin-bottom:10px}
+        .stat-card h3{font-size:1.8rem;font-weight:700;margin-bottom:5px}
+        .stat-card p{font-size:0.8rem;color:#888}
+
+        /* Section Styles */
+        .section{margin-bottom:50px;animation:fadeIn 1s ease}
+        .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,0.08)}
+        .section-title{display:flex;align-items:center;gap:12px}
+        .section-title i{color:#10b981;background:rgba(16,185,129,0.1);padding:10px;border-radius:10px;font-size:1.1rem}
+        .section-title h2{font-size:1.3rem;font-weight:600}
+        .view-all{color:#10b981;font-size:0.85rem;text-decoration:none;display:flex;align-items:center;gap:5px;transition:0.3s}
+        .view-all:hover{gap:8px}
+
+        /* List Items */
+        .list-item{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);padding:16px 20px;border-radius:12px;margin-bottom:10px;transition:0.3s}
+        .list-item:hover{background:rgba(255,255,255,0.05);border-color:rgba(16,185,129,0.2);transform:translateX(5px)}
+        .item-left{display:flex;align-items:center;gap:15px;flex:1}
+        .item-icon{width:42px;height:42px;background:rgba(16,185,129,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#10b981}
+        .item-icon.blue{background:rgba(14,165,233,0.1);color:#0ea5e9}
+        .item-icon.purple{background:rgba(139,92,246,0.1);color:#8b5cf6}
+        .item-icon.orange{background:rgba(249,115,22,0.1);color:#f97316}
+        .item-text h4{font-size:0.95rem;font-weight:500;margin-bottom:4px}
+        .item-meta{display:flex;align-items:center;gap:12px;font-size:0.8rem;color:#666}
+        .item-meta i{margin-right:4px;font-size:0.7rem}
+        .tag{padding:3px 8px;border-radius:12px;font-size:0.65rem;font-weight:600;text-transform:uppercase}
+        .tag-green{background:rgba(16,185,129,0.15);color:#10b981}
+        .tag-blue{background:rgba(14,165,233,0.15);color:#0ea5e9}
+        .tag-purple{background:rgba(139,92,246,0.15);color:#8b5cf6}
+        .tag-orange{background:rgba(249,115,22,0.15);color:#f97316}
+        .actions{display:flex;gap:8px}
+        .btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.3s;font-size:0.85rem}
+        .btn:hover{background:#10b981;border-color:#10b981}
+
+        /* Animations */
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+        /* Responsive */
+        @media(max-width:768px){
+            .hero h1{font-size:2.2rem}
+            .stats{grid-template-columns:repeat(2,1fr)}
+            .list-item{flex-direction:column;align-items:flex-start;gap:12px}
+            .actions{width:100%;justify-content:flex-end}
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-glow">
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+        <div class="glow g3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> Welcome Back</div>
+            <h1>Your <span>Workspace</span> Hub</h1>
+            <p>Manage presentations, recordings, and content all in one beautiful dashboard</p>
+            <div class="user-profile">
+                <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                <div>
+                    <h4>Alex Morgan</h4>
+                    <span>alex.morgan@company.com</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fa-solid fa-layer-group"></i>
+                <h3>24</h3>
+                <p>Total Decks</p>
+            </div>
+            <div class="stat-card">
+                <i class="fa-solid fa-microphone"></i>
+                <h3>156</h3>
+                <p>Recordings</p>
+            </div>
+            <div class="stat-card">
+                <i class="fa-solid fa-newspaper"></i>
+                <h3>38</h3>
+                <p>Blog Posts</p>
+            </div>
+            <div class="stat-card">
+                <i class="fa-solid fa-eye"></i>
+                <h3>12.4k</h3>
+                <p>Total Views</p>
+            </div>
+        </div>
+
+        <!-- Decks Section -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <h2>Recent Decks</h2>
+                </div>
+                <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="list-item">
+                <div class="item-left">
+                    <div class="item-icon"><i class="fa-solid fa-file-powerpoint"></i></div>
+                    <div class="item-text">
+                        <h4>Q4 Marketing Strategy Presentation</h4>
+                        <div class="item-meta">
+                            <span><i class="fa-regular fa-clock"></i>2 hours ago</span>
+                            <span><i class="fa-solid fa-eye"></i>124 views</span>
+                            <span class="tag tag-green">Marketing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="btn"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn"><i class="fa-solid fa-share"></i></button>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="item-left">
+                    <div class="item-icon blue"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="item-text">
+                        <h4>Investor Pitch Deck - Series B</h4>
+                        <div class="item-meta">
+                            <span><i class="fa-regular fa-clock"></i>Yesterday</span>
+                            <span><i class="fa-solid fa-eye"></i>89 views</span>
+                            <span class="tag tag-blue">Finance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="btn"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn"><i class="fa-solid fa-share"></i></button>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="item-left">
+                    <div class="item-icon purple"><i class="fa-solid fa-rocket"></i></div>
+                    <div class="item-text">
+                        <h4>Product Roadmap 2024</h4>
+                        <div class="item-meta">
+                            <span><i class="fa-regular fa-clock"></i>3 days ago</span>
+                            <span><i class="fa-solid fa-eye"></i>256 views</span>
+                            <span class="tag tag-purple">Product</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="btn"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn"><i class="fa-solid fa-share"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call Recordings Section -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    <i class="fa-solid fa-microphone"></i>
+                    <h2>Call Recordings</h2>
+                </div>
+                <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="list-item">
+                <div class="item-left">
+                    <div class="item-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="item-text">
+                        <h4>Client Discovery Call - Acme Corp</h4>
+                        <div class="item-meta">
+                            <span><i class="fa-solid fa-clock"></i>45 min</span>
+                            <span><i class="fa-solid fa-calendar"></i>Oct 15, 2024</span>
+                            <span class="tag tag-orange">Sales</span>

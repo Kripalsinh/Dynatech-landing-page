@@ -1,0 +1,473 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aesthetic Blue Gradient Landing - Blogs &amp; Call Recordings</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #121f3d, #1969d2);
+            color: #e1eefd;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1140px;
+            width: 92%;
+            margin: 50px auto 80px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(145deg, #16315c, #1a4c9f);
+            border-radius: 36px;
+            padding: 48px 48px 56px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            box-shadow:
+                0 0 40px rgb(32 70 180 / 0.9),
+                inset 0 0 100px 50px rgb(25 75 176 / 0.55);
+            position: relative;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        .hero-left h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            color: #add1ff;
+            text-shadow: 0 0 15px #1f67ffcc;
+            user-select: none;
+        }
+
+        .hero-left p {
+            font-weight: 400;
+            font-size: 1.15rem;
+            max-width: 560px;
+            color: #c5d9ffcc;
+            line-height: 1.5;
+            filter: drop-shadow(0 0 5px #4d81ffcc);
+        }
+
+        /* Hero search */
+        .search-bar {
+            margin-top: 32px;
+            background: rgba(255 255 255 / 0.10);
+            border-radius: 36px;
+            padding: 20px 30px;
+            display: flex;
+            gap: 20px;
+            box-shadow: inset 0 0 28px #3a6de7aa;
+            user-select: none;
+        }
+
+        .search-bar input[type="text"] {
+            flex: 1 1 auto;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #d4e5ff;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 26px;
+            font-weight: 600;
+            text-shadow: 0 0 5px #406bcc;
+            user-select: text;
+        }
+
+        .search-bar input[type="text"]::placeholder {
+            color: #9db7ffcc;
+            font-weight: 400;
+        }
+
+        .search-bar button.mic-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #a8bbffcc;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .search-bar button.mic-btn:hover,
+        .search-bar button.mic-btn:focus {
+            color: #e7f0ff;
+            outline: none;
+        }
+
+        /* Hero image & features */
+        .hero-right {
+            position: relative;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-right img {
+            max-width: 100%;
+            border-radius: 28px;
+            box-shadow:
+                0 24px 48px rgba(23, 69, 165, 0.75);
+            object-fit: cover;
+            filter: drop-shadow(0 0 18px #3874ffaa);
+        }
+
+        .feature-list {
+            position: absolute;
+            top: 15%;
+            right: 6%;
+            background: rgba(255 255 255 / 0.15);
+            backdrop-filter: blur(18px);
+            border-radius: 36px;
+            padding: 26px 36px;
+            box-shadow: 0 0 38px #72a4ff88;
+            max-width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-list p {
+            font-size: 1rem;
+            color: #e0ebffdd;
+            text-shadow: 0 0 10px #3b69ffcc;
+            user-select: none;
+            position: relative;
+            padding-left: 30px;
+            font-weight: 600;
+        }
+
+        .feature-list p::before {
+            content: "\f058";
+            /* Font Awesome check icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 7px;
+            top: 2px;
+            font-size: 1.4rem;
+            color: #4d90ffcc;
+            text-shadow: 0 0 8px #1f54ff99;
+        }
+
+        /* Cards Section (Blogs, Call Recordings, Decks) */
+        .cards-section {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .cards-section h2 {
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: #c8dfff;
+            text-shadow: 0 0 18px #3f81ffcc;
+            margin-bottom: 56px;
+            user-select: none;
+        }
+
+        .cards-grid {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #2f4b8a, #395cae);
+            border-radius: 28px;
+            padding: 36px 32px 48px;
+            box-shadow:
+                0 10px 35px rgba(43, 98, 193, 0.8);
+            color: #d1e5ffdd;
+            width: 320px;
+            cursor: default;
+            user-select: none;
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover,
+        .card:focus-within {
+            box-shadow:
+                0 24px 56px rgba(51, 102, 255, 0.85);
+            transform: translateY(-10px);
+            outline: none;
+        }
+
+        .card-icon {
+            font-size: 54px;
+            margin-bottom: 28px;
+            color: #9fbbffcc;
+            filter: drop-shadow(0 0 10px #5290ffbb);
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.9rem;
+            margin-bottom: 16px;
+            color: #c3d8ff;
+            text-shadow: 0 0 12px #4a78ffff;
+        }
+
+        .card-desc {
+            font-size: 1.1rem;
+            line-height: 1.45;
+            color: #b8d1ffcc;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        /* Lists inside cards */
+        .item-list {
+            list-style: none;
+            width: 100%;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-left: 10px;
+            color: #c2d9ffcc;
+            scrollbar-width: thin;
+            scrollbar-color: #5f86ff66 transparent;
+        }
+
+        .item-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .item-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .item-list::-webkit-scrollbar-thumb {
+            background-color: #5f86ff66;
+            border-radius: 8px;
+        }
+
+        .item-list li {
+            margin-bottom: 14px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-list li i {
+            color: #82a0ffcc;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Additional Section: User Call to Action */
+        .cta-section {
+            margin-top: 96px;
+            background: linear-gradient(145deg, #1d416e, #2c5fbc);
+            border-radius: 40px;
+            padding: 48px 52px;
+            max-width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow:
+                0 10px 45px rgba(20, 55, 130, 0.9);
+            color: #dde8ff;
+            text-align: center;
+            user-select: none;
+        }
+
+        .cta-section h3 {
+            font-weight: 700;
+            font-size: 2.4rem;
+            margin-bottom: 24px;
+            text-shadow: 0 0 20px #527dfa;
+        }
+
+        .cta-section p {
+            font-weight: 400;
+            font-size: 1.2rem;
+            color: #bbd1ffcc;
+            margin-bottom: 40px;
+            max-width: 730px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5690ff, #2c59e8);
+            padding: 14px 42px;
+            border: none;
+            border-radius: 32px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            box-shadow:
+                0 8px 25px #2d50f0b0;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: linear-gradient(135deg, #8fb8ff, #497ee7);
+            outline: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                padding: 36px 36px 44px;
+                gap: 40px;
+            }
+
+            .hero-right {
+                order: -1;
+            }
+
+            .cards-grid {
+                justify-content: center;
+                gap: 36px;
+            }
+
+            .card {
+                width: 90vw;
+                max-width: 380px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-left h1 {
+                font-size: 2.7rem;
+            }
+
+            .hero-left p {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" role="main" aria-label="Aesthetic Landing Page with Blogs and Call Recordings">
+
+        <!-- Hero Section -->
+        <section class="hero-section" aria-label="Landing introduction and search area">
+            <div class="hero-left">
+                <h1>Explore The World With Us!</h1>
+                <p>Plan your next adventure with personalized travel packages, seamless bookings, and unforgettable
+                    experiences. Discover our blogs, call recordings, and curated content designed for you.</p>
+                <div class="search-bar" role="search">
+                    <input type="text" placeholder="Search articles, calls, and decks..."
+                        aria-label="Search site content">
+                    <button class="mic-btn" aria-label="Activate voice search" tabindex="0">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-right" aria-hidden="true">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
+                    alt="Happy travelers enjoying">
+                <div class="feature-list" aria-label="Key service features">
+                    <p>500+ Destinations Worldwide</p>
+                    <p>Customized Travel Packages</p>
+                    <p>24/7 Support for Travelers</p>
+                    <p>Safe and Secure Experiences</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards Section: Blogs, Call Recordings and Decks -->
+        <section class="cards-section" aria-label="Features: Blogs, Call recordings and Decks">
+            <h2>Explore Our Content</h2>
+            <div class="cards-grid">
+
+                <!-- Blogs Card -->
+                <article class="card" tabindex="0" aria-labelledby="blogs-title" role="region">
+                    <i class="fa-solid fa-blog card-icon" aria-hidden="true"></i>
+                    <h3 id="blogs-title" class="card-title">Blogs</h3>
+                    <p class="card-desc">Stay updated with interesting articles, travel stories, tips, and insider
+                        guides crafted by our experts.</p>
+                    <ul class="item-list" aria-label="Latest blog posts">
+                        <li><i class="fa-solid fa-chevron-right"></i> 10 Tips for Stress-Free Travel</li>
+                        <li><i class="fa-solid fa-chevron-right"></i> Hidden Gems in Europe You Must Visit</li>
+                        <li><i class="fa-solid fa-chevron-right"></i> Packing Like a Pro: Essentials to Bring</li>
+                        <li><i class="fa-solid fa-chevron-right"></i> Cultural Etiquettes Around the World</li>
+                        <li><i class="fa-solid fa-chevron-right"></i> How to Choose Sustainable Tourism</li>
+                    </ul>
+                </article>
+
+                <!-- Call Recordings Card -->
+                <article class="card" tabindex="0" aria-labelledby="calls-title" role="region">
+                    <i class="fa-solid fa-phone-volume card-icon" aria-hidden="true"></i>
+                    <h3 id="calls-title" class="card-title">Call Recordings</h3>
+                    <p class="card-desc">Review important client calls, consult audio logs, and manage communications
+                        for your travel needs.</p>
+                    <ul class="item-list" aria-label="Recent call recordings">
+                        <li><i class="fa-solid fa-microphone-lines"></i> Call with Travel Agent - July 12, 2024</li>
+                        <li><i class="fa-solid fa-microphone-lines"></i> Client Inquiry about Paris Tour - July 10, 2024
+                        </li>
+                        <li><i class="fa-solid fa-microphone-lines"></i> Package Discussion - June 29, 2024</li>
+                        <li><i class="fa-solid fa-microphone-lines"></i> Support Follow-up Call - June 20, 2024</li>
+                        <li><i class="fa-solid fa-microphone-lines"></i> Feedback Call - June 14, 2024</li>
+                    </ul>
+                </article>
+
+                <!-- Decks Card -->
+                <article class="card" tabindex="0" aria-labelledby="decks-title" role="region">
+                    <i class="fa-solid fa-layer-group card-icon" aria-hidden="true"></i>
+                    <h3 id="decks-title" class="card-title">Decks</h3>
+                    <p class="card-desc">Visualize your travel plans, itineraries, and bookings with interactive decks
+                        designed for clarity and ease.</p>
+                    <ul class="item-list" aria-label="Sample decks">
+                        <li><i class="fa-solid fa-folder-open"></i> Summer 2024 Europe Trip</li>
+                        <li><i class="fa-solid fa-folder-open"></i> Asia Adventure 2023</li>
+                        <li><i class="fa-solid fa-folder-open"></i> Family Vacation Special</li>
+                        <li><i class="fa-solid fa-folder-open"></i> Honeymoon Highlights</li>
+                        <li><i class="fa-solid fa-folder-open"></i> Cruising the Mediterranean</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Additional Section: User Testimonial -->
+        <section class="cta-section" aria-label="User testimonial and call to action">
+            <h3>What Our Travelers Say</h3>
+            <p>"The blogs helped me plan the perfect trip! The call recordings ensured nothing was missed in
+                communication with my agent. The decks made all the information clear and easy to follow. A fantastic
+                travel experience overall!"</p>
+            <button class="btn-primary" aria-label="Get started now">Get Started Now</button>
+        </section>
+
+    </div>
+
+
+</body>
+
+</html>

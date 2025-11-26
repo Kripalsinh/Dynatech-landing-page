@@ -1,0 +1,587 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starter Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px
+        }
+
+        /* Decorative Elements */
+        .decor {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1
+        }
+
+        .decor-1 {
+            top: 0;
+            right: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%)
+        }
+
+        .decor-2 {
+            bottom: 0;
+            left: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, transparent 70%)
+        }
+
+        .line {
+            position: fixed;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(245, 158, 11, 0.2), transparent);
+            top: 0
+        }
+
+        .line-1 {
+            left: 10%
+        }
+
+        .line-2 {
+            left: 90%
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #f59e0b, transparent)
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #f59e0b;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease
+        }
+
+        .hero-label i {
+            font-size: 0.6rem
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: slideUp 1s ease
+        }
+
+        .hero h1 span {
+            color: #f59e0b;
+            font-style: italic
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            animation: slideUp 1s ease 0.2s backwards
+        }
+
+        /* User Card */
+        .user-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 12px 25px 12px 12px;
+            border-radius: 60px;
+            animation: slideUp 1s ease 0.4s backwards;
+            transition: 0.4s
+        }
+
+        .user-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3)
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem
+        }
+
+        .user-info h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: #666
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 50px 0;
+            border-bottom: 1px solid #1a1a1a;
+            animation: fadeIn 1s ease 0.6s backwards
+        }
+
+        .stat {
+            text-align: center
+        }
+
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f59e0b;
+            font-family: 'Playfair Display', serif
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px
+        }
+
+        /* Section Layout */
+        .sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 60px 0
+        }
+
+        .section-full {
+            grid-column: 1/-1
+        }
+
+        .section {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            transition: 0.4s
+        }
+
+        .section:hover {
+            border-color: #2a2a2a
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #1a1a1a
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .section-title i {
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .section-title h2 {
+            font-size: 1.4rem;
+            font-weight: 500
+        }
+
+        .see-all {
+            color: #f59e0b;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.3s
+        }
+
+        .see-all:hover {
+            text-decoration: underline
+        }
+
+        /* List Items */
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid transparent
+        }
+
+        .item:hover {
+            background: #1a1a1a;
+            border-color: #2a2a2a
+        }
+
+        .item:last-child {
+            margin-bottom: 0
+        }
+
+        .item-num {
+            width: 30px;
+            height: 30px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 600
+        }
+
+        .item:hover .item-num {
+            background: #f59e0b;
+            color: #000
+        }
+
+        .item-content {
+            flex: 1
+        }
+
+        .item-content h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 4px
+        }
+
+        .item-content p {
+            font-size: 0.8rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .item-content p i {
+            color: #f59e0b;
+            font-size: 0.7rem
+        }
+
+        .item-tag {
+            padding: 4px 10px;
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            font-size: 0.7rem;
+            border-radius: 20px;
+            font-weight: 500
+        }
+
+        .item-action {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #2a2a2a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: 0.3s
+        }
+
+        .item:hover .item-action {
+            border-color: #f59e0b;
+            color: #f59e0b
+        }
+
+        /* Blog Cards - Different Layout */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px
+        }
+
+        .blog-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.4s;
+            border: 1px solid #2a2a2a
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            border-color: #f59e0b
+        }
+
+        .blog-img {
+            height: 120px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #333
+        }
+
+        .blog-card:nth-child(1) .blog-img {
+            background: linear-gradient(135deg, #1a1a1a, #2d1f0f)
+        }
+
+        .blog-card:nth-child(2) .blog-img {
+            background: linear-gradient(135deg, #1a1a1a, #0f1a2d)
+        }
+
+        .blog-card:nth-child(3) .blog-img {
+            background: linear-gradient(135deg, #1a1a1a, #1a0f2d)
+        }
+
+        .blog-body {
+            padding: 20px
+        }
+
+        .blog-tag {
+            font-size: 0.7rem;
+            color: #f59e0b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px
+        }
+
+        .blog-body h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.4
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.75rem;
+            color: #555
+        }
+
+        .blog-meta i {
+            margin-right: 4px
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* Responsive */
+        @media(max-width:900px) {
+            .sections {
+                grid-template-columns: 1fr
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr
+            }
+
+            .hero h1 {
+                font-size: 2.5rem
+            }
+
+            .stats-row {
+                flex-wrap: wrap;
+                gap: 30px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Decorative Elements -->
+    <div class="decor decor-1"></div>
+    <div class="decor decor-2"></div>
+    <div class="line line-1"></div>
+    <div class="line line-2"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-label"><i class="fa-solid fa-circle"></i> Dashboard <i class="fa-solid fa-circle"></i>
+            </div>
+            <h1>Welcome to <span>Starter</span></h1>
+            <p>Your elegant workspace for managing presentations, recordings, and content</p>
+            <div class="user-card">
+                <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="user-info">
+                    <h4>Alexander Morgan</h4>
+                    <p>alex.morgan@company.com</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat">
+                <div class="stat-num">24</div>
+                <div class="stat-label">Decks</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">156</div>
+                <div class="stat-label">Recordings</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">38</div>
+                <div class="stat-label">Blogs</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">12.4k</div>
+                <div class="stat-label">Views</div>
+            </div>
+        </div>
+
+        <!-- Sections Grid -->
+        <div class="sections">
+            <!-- Decks Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <h2>Decks</h2>
+                    </div>
+                    <a href="#" class="see-all">See All →</a>
+                </div>
+                <div class="item">
+                    <div class="item-num">01</div>
+                    <div class="item-content">
+                        <h4>Q4 Marketing Strategy</h4>
+                        <p><i class="fa-solid fa-clock"></i> 2h ago <i class="fa-solid fa-eye"></i> 124 views</p>
+                    </div>
+                    <span class="item-tag">Marketing</span>
+                    <div class="item-action"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="item">
+                    <div class="item-num">02</div>
+                    <div class="item-content">
+                        <h4>Investor Pitch Deck</h4>
+                        <p><i class="fa-solid fa-clock"></i> Yesterday <i class="fa-solid fa-eye"></i> 89 views</p>
+                    </div>
+                    <span class="item-tag">Finance</span>
+                    <div class="item-action"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="item">
+                    <div class="item-num">03</div>
+                    <div class="item-content">
+                        <h4>Product Roadmap 2024</h4>
+                        <p><i class="fa-solid fa-clock"></i> 3 days ago <i class="fa-solid fa-eye"></i> 256 views</p>
+                    </div>
+                    <span class="item-tag">Product</span>
+                    <div class="item-action"><i class="fa-solid fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Call Recordings Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-microphone"></i>
+                        <h2>Recordings</h2>
+                    </div>
+                    <a href="#" class="see-all">See All →</a>
+                </div>
+                <div class="item">
+                    <div class="item-num">01</div>
+                    <div class="item-content">
+                        <h4>Client Call - Acme Corp</h4>
+                        <p><i class="fa-solid fa-clock"></i> 45 min <i class="fa-solid fa-calendar"></i> Oct 15</p>
+                    </div>
+                    <span class="item-tag">Sales</span>
+                    <div class="item-action"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="item">
+                    <div class="item-num">02</div>
+                    <div class="item-content">
+                        <h4>Weekly Team Standup</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030712;--surface:#111827;--border:#1f2937;--text:#f9fafb;--muted:#9ca3af;--primary:#6366f1;--accent:#06b6d4;--success:#10b981;--warning:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at top,#1e1b4b 0%,var(--bg) 60%)}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px);background-size:60px 60px;animation:grid 20s linear infinite}
+@keyframes grid{to{transform:translateY(60px)}}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:pulse 8s infinite alternate}
+.orb1{width:400px;height:400px;background:var(--primary);top:-100px;left:-100px;opacity:0.15}
+.orb2{width:300px;height:300px;background:#8b5cf6;bottom:-50px;right:-50px;opacity:0.1}
+@keyframes pulse{to{transform:scale(1.2)}}
+.hero-content{text-align:center;z-index:10;animation:fadeUp 1s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);padding:10px 20px;border-radius:30px;font-size:0.85rem;color:var(--primary);margin-bottom:30px}
+.hero h1{font-size:3.5rem;font-weight:700;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:500px;margin:0 auto 30px}
+.user-card{display:inline-flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);padding:10px 20px 10px 10px;border-radius:50px}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center}
+.user-info h4{font-size:0.9rem}.user-info span{font-size:0.75rem;color:var(--muted)}
+.scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+
+/* Main */
+.main{max-width:1100px;margin:0 auto;padding:60px 20px 80px}
+
+/* Section */
+.section{margin-bottom:50px}
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid var(--border)}
+.sec-title{display:flex;align-items:center;gap:12px}
+.sec-icon{width:45px;height:45px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.sec-title h2{font-size:1.4rem;font-weight:600}
+.view-btn{color:var(--accent);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:6px}
+
+/* List Item */
+.list{display:flex;flex-direction:column;gap:12px}
+.item{display:flex;align-items:center;gap:20px;background:var(--surface);border:1px solid var(--border);padding:18px 22px;border-radius:14px;transition:0.3s}
+.item:hover{border-color:var(--primary);transform:translateX(8px);background:#1a2332}
+.item-icon{width:50px;height:50px;border-radius:12px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--primary);transition:0.3s}
+.item:hover .item-icon{background:var(--primary);color:#fff}
+.item-content{flex:1}
+.item-content h4{font-size:1rem;font-weight:500;margin-bottom:6px}
+.item-meta{display:flex;gap:15px;font-size:0.8rem;color:var(--muted)}
+.item-meta i{color:var(--accent);margin-right:4px}
+.tag{padding:5px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;text-transform:uppercase}
+.t1{background:rgba(139,92,246,0.15);color:#a78bfa}
+.t2{background:rgba(6,182,212,0.15);color:var(--accent)}
+.t3{background:rgba(16,185,129,0.15);color:var(--success)}
+.t4{background:rgba(245,158,11,0.15);color:var(--warning)}
+.actions{display:flex;gap:8px}
+.act{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.3s}
+.act:hover{background:var(--primary);border-color:var(--primary)}
+
+@media(max-width:768px){.hero h1{font-size:2.5rem}.item{flex-direction:column;align-items:flex-start;gap:15px}.actions{width:100%;justify-content:flex-end}}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="hero-content">
+<div class="badge"><i class="fa-solid fa-sparkles"></i> Creative Studio</div>
+<h1>Your <span>Workspace</span></h1>
+<p>Manage decks, recordings, and blogs beautifully.</p>
+<div class="user-card">
+<div class="avatar"><i class="fa-solid fa-user"></i></div>
+<div class="user-info"><h4>Alex Morgan</h4><span>alex@studio.com</span></div>
+</div>
+</div>
+<div class="scroll"><i class="fa-solid fa-chevron-down" style="color:var(--muted)"></i></div>
+</section>
+
+<!-- Main Content -->
+<main class="main">
+
+<!-- Decks -->
+<div class="section">
+<div class="sec-header">
+<div class="sec-title"><div class="sec-icon"><i class="fa-solid fa-layer-group"></i></div><h2>Decks</h2></div>
+<a href="#" class="view-btn">View All <i class="fa-solid fa-arrow-right"></i></a>
+</div>
+<div class="list">
+<div class="item">
+<div class="item-icon"><i class="fa-solid fa-file-powerpoint"></i></div>
+<div class="item-content">
+<h4>Q4 Marketing Strategy</h4>
+<div class="item-meta"><span><i class="fa-regular fa-clock"></i>2h ago</span><span><i class="fa-solid fa-eye"></i>124 views</span></div>
+</div>
+<span class="tag t1">Strategy</span>
+<div class="actions"><button class="act"><i class="fa-solid fa-play"></i></button><button class="act"><i class="fa-solid fa-pen"></i></button></div>
+</div>
+<div class="item">
+<div class="item-icon"><i class="fa-solid fa-chart-pie"></i></div>
+<div class="item-content">
+<h4>Investor Pitch Deck</h4>
+<div class="item-meta"><span><i class="fa-regular fa-clock"></i>Yesterday</span><span><i class="fa-solid fa-eye"></i>89 views</span></div>
+</div>
+<span class="tag t2">Finance</span>
+<div class="actions"><button class="act"><i class="fa-solid fa-play"></i></button><button class="act"><i class="fa-solid fa-pen"></i></button></div>
+</div>
+</div>
+</div>
+
+<!-- Recordings -->
+<div class="section">
+<div class="sec-header">
+<div class="sec-title"><div class="sec-icon"><i class="fa-solid fa-microphone"></i></div><h2>Call Recordings</h2></div>
+<a href="#" class="view-btn">View All <i class="fa-solid fa-arrow-right"></i></a>
+</div>
+<div class="list">
+<div class="item">
+<div class="item-icon"><i class="fa-solid fa-phone"></i></div>
+<div class="item-content">
+<h4>Client Discovery Call</h4>
+<div class="item-meta"><span><i class="fa-solid fa-clock"></i>45 min</span><span><i class="fa-solid fa-calendar"></i>Oct 15</span></div>
+</div>
+<span class="tag t3">Sales</span>
+<div class="actions"><button class="act"><i class="fa-solid fa-play"></i></button><button class="act"><i class="fa-solid fa-download"></i></button></div>
+</div>
+<div class="item">
+<div class="item-icon"><i class="fa-solid fa-users"></i></div>
+<div class="item-content">
+<h4>Weekly Team Standup</h4>
+<div class="item-meta"><span><i class="fa-solid fa-clock"></i>30 min</span><span><i class="fa-solid fa-calendar"></i>Oct 14</span></div>
+</div>
+<span class="tag t1">Internal</span>
+<div class="actions"><button class="act"><i class="fa-solid fa-play"></i></button><button class="act"><i class="fa-solid fa-download"></i></button></div>
+</div>
+</div>
+</div>
+
+<!-- Blogs -->
+<div class="section">
+<div class="sec-header">
+<div class="sec-title"><div class="sec-icon"><i class="fa-solid fa-newspaper"></i></div><h2>Blogs</h2></div>
+<a href="#" class="view-btn">View All <i class="fa-solid fa-arrow-right"></i></a>
+</div>
+<div class="list">
+<div class="item">
+<div class="item-icon"><i class="fa-brands fa-medium"></i></div>
+<div class="item-content">
+<h4>Future of SaaS in 2024</h4>
+<div class="item-meta"><span><i class="fa-solid fa-eye"></i>1.2k reads</span><span><i class="fa-solid fa-heart"></i>89 likes</span></div>
+</div>
+<span class="tag t2">Technology</span>
+<div class="actions"><button class="act"><i class="fa-solid fa-arrow-up-right-from-square"></i></button><button class="act"><i class="fa-solid fa-pen"></i></button></div>
+</div>
+<div class="item">
+<div class="item-icon"><i class="fa-solid fa-lightbulb"></i></div>
+<div class="item-content">
+<h4>Remote Team Leadership Tips</h4>
+<div class="item-meta"><span><i class="fa-solid fa-eye"></i>856 reads</span><span><i class="fa-solid fa-heart"></i>67 likes</span></div>
+</div>
+<span class="tag t4">Leadership</span>
+<div class="actions"><button class="act"><i class="fa-solid fa-arrow-up-right-from-square"></i></button><button class="act"><i class="fa-solid fa-pen"></i></button></div>
+</div>
+</div>
+</div>
+
+</main>
+
+
+</body></html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Workspace Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.12);
+            --text-color: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-cyan: #00d4ff;
+            --accent-blue: #4facfe;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+         
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: #0061ff;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: #60efff;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(30px, 50px);
+            }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #a5f3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            animation: fadeDown 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeDown 1s ease 0.2s forwards;
+          
+        }
+
+        /* User Profile Pill */
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            padding: 8px 25px 8px 8px;
+            border-radius: 50px;
+            animation: fadeDown 1s ease 0.4s forwards;
+       
+            transition: transform 0.3s ease;
+        }
+
+        .user-pill:hover {
+            transform: translateY(-3px);
+            background: var(--glass-highlight);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .user-details {
+            text-align: left;
+        }
+
+        .user-details h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .user-details span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 60px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+         
+            /* For JS animation */
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header i {
+            font-size: 1.4rem;
+            color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        /* List View Styles */
+        .list-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: var(--glass-border);
+            padding: 20px 30px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+          
+            /* For JS animation */
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, box-shadow 0.3s;
+        }
+
+        .list-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .list-item:hover {
+            transform: translateX(5px);
+            background: var(--glass-highlight);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .list-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent-cyan);
+        
+            transition: opacity 0.3s ease;
+        }
+
+        .list-item:hover::before {
+            opacity: 1;
+        }
+
+        .item-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex: 1;
+        }
+
+        .item-icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+        }
+
+        .item-text h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .item-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-meta i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-blue {
+            background: rgba(79, 172, 254, 0.2);
+            color: #4facfe;
+        }
+
+        .tag-purple {
+            background: rgba(164, 80, 139, 0.2);
+            color: #e0c3fc;
+        }
+
+        .tag-green {
+            background: rgba(66, 230, 149, 0.2);
+            color: #42e695;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: white;
+            color: #0f0c29;
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .list-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .item-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .item-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to Your Hub</h1>
+            <p>Access your presentations, review call insights, and read the latest updates in one streamlined
+                interface.</p>
+
+            <div class="user-pill">
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h3>Alex Morgan</h3>
+                    <span>alex.morgan@workspace.com</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Decks Section -->
+        <div class="section-header">
+            <i class="fa-solid fa-layer-group"></i>
+            <h2>Decks & Presentations</h2>
+        </div>
+
+        <div class="list-group">
+            <div class="list-item">
+                <div class="item-content">
+                    <div class="item-icon-box"><i class="fa-solid fa-file-powerpoint"></i></div>
+                    <div class="item-text">
+                        <h3>Q4 Marketing Strategy 2023</h3>
+                        <div class="item-meta">
+                            <span><i class="fa-regular fa-clock"></i> 2h ago</span>
+                            <span><i class="fa-solid fa-eye"></i> 24 Views</span>
+                            <span class="tag tag-blue">Strategy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="action-btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <div class="item-content">
+                    <div class="item-icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div class="item-text">
+                        <h3>Investor Pitch Deck - Series B</h3>
+                        <div class="item-meta">
+                            <span><i class="fa-regular fa-clock"></i> Yesterday</span>
+                            <span><i class="fa-solid fa-eye"></i> 150 Views</span>
+                            <span class="tag tag-purple">Finance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="action-btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <div class="item-content">
+                    <div class="item-icon-box"><i class="fa-solid fa-rocket"></i></div>
+                    <div class="item-text">
+                        <h3>Product Roadmap 2024</h3>
+                        <div class="item-meta">
+                            <span><i class="fa-regular fa-clock"></i> 3 days ago</span>
+                            <span><i class="fa-solid fa-eye"></i> 89 Views</span>
+                            <span class="tag tag-green">Product</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="action-btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                </div>
+            </div>
+        </div>

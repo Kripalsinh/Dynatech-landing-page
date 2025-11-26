@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== ROOT VARIABLES ===== */
+:root {
+    --bg: #030712;
+    --surface: #111827;
+    --border: #1f2937;
+    --text: #f9fafb;
+    --muted: #6b7280;
+    --primary: #6366f1;
+    --secondary: #8b5cf6;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --glow: rgba(99, 102, 241, 0.4);
+}
+
+/* ===== RESET ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); }
+
+/* ===== HERO SECTION ===== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at top, #1e1b4b 0%, var(--bg) 60%);
+}
+
+/* Animated Grid Background */
+.grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove { to { transform: translateY(60px); } }
+
+/* Floating Particles */
+.particles { position: absolute; inset: 0; overflow: hidden; }
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: rise 10s infinite;
+}
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 30%; animation-delay: 2s; }
+.particle:nth-child(3) { left: 50%; animation-delay: 4s; }
+.particle:nth-child(4) { left: 70%; animation-delay: 6s; }
+.particle:nth-child(5) { left: 90%; animation-delay: 8s; }
+@keyframes rise {
+    0% { bottom: -10px; opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { bottom: 100%; opacity: 0; }
+}
+
+/* Glowing Orbs */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: pulse 8s ease-in-out infinite alternate;
+}
+.orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; opacity: 0.15; }
+.orb-2 { width: 300px; height: 300px; background: var(--secondary); bottom: -50px; right: -50px; opacity: 0.1; animation-delay: -4s; }
+@keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+
+/* Hero Content */
+.hero-content {
+    text-align: center;
+    z-index: 10;
+    padding: 20px;
+    animation: fadeUp 1s ease;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.3);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    margin-bottom: 30px;
+    animation: fadeUp 1s ease 0.2s backwards;
+}
+.hero-badge i { animation: spin 3s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: fadeUp 1s ease 0.4s backwards;
+}
+.hero h1 span {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    animation: fadeUp 1s ease 0.6s backwards;
+}
+
+/* User Card */
+.user-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 25px 12px 12px;
+    border-radius: 50px;
+    animation: fadeUp 1s ease 0.8s backwards;
+    transition: 0.3s;
+}
+.user-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user-info h4 { font-size: 0.95rem; font-weight: 600; }
+.user-info span { font-size: 0.8rem; color: var(--muted); }
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+}
+.scroll-indicator i { font-size: 1.5rem; color: var(--muted); }
+@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+
+/* ===== MAIN CONTENT ===== */
+.main { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+
+/* Stats Row */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 60px;
+}
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    transition: 0.3s;
+}
+.stat-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+.stat-card i { font-size: 1.8rem; color: var(--primary); margin-bottom: 15px; }
+.stat-card h3 { font-size: 2.2rem; font-weight: 700; }
+.stat-card p { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Section Layout */
+.sections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+.section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    transition: 0.3s;
+}
+.section:hover { border-color: var(--border); }
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.section-title i {
+    color: var(--primary);
+    background: rgba(99,102,241,0.1);
+    padding: 8px;
+    border-radius: 8px;
+}
+.view-link { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
+
+/* List Items */
+.item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.item:hover { background: rgba(255,255,255,0.03); }
+.item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(99,102,241,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+.item-text { flex: 1; }
+.item-text h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 3px; }
+.item-text p { font-size: 0.75rem; color: var(--muted); }
+.item-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+.item:hover .item-btn { opacity: 1; }
+.item-btn:hover { background: var(--primary); border-color: var(--primary); }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero h1 { font-size: 2.5rem; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .sections { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+    <div class="grid-bg"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    
+    <div class="hero-content">
+        <div class="hero-badge"><i class="fa-solid fa-gear"></i> Studio Dashboard</div>
+        <h1>Your Creative<br><span>Workspace</span></h1>
+        <p>Manage decks, recordings, and blogs in one beautiful interface.</p>
+        <div class="user-card">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info">
+                <h4>Alex Morgan</h4>
+                <span>alex@studio.com</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
+</section>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main">
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-card"><i class="fa-solid fa-layer-group"></i><h3>24</h3><p>Decks</p></div>
+        <div class="stat-card"><i class="fa-solid fa-microphone"></i><h3>156</h3><p>Recordings</p></div>
+        <div class="stat-card"><i class="fa-solid fa-newspaper"></i><h3>38</h3><p>Blogs</p></div>
+        <div class="stat-card"><i class="fa-solid fa-eye"></i><h3>12k</h3><p>Views</p></div>
+    </div>
+
+    <!-- Sections Grid -->
+    <div class="sections">
+        <!-- Decks -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title"><i class="fa-solid fa-layer-group"></i> Decks</div>
+                <a href="#" class="view-link">View All</a>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fa-solid fa-file-powerpoint"></i></div>
+                <div class="item-text"><h4>Marketing Strategy</h4><p>2 hours ago</p></div>
+                <button class="item-btn"><i class="fa-solid fa-play"></i></button>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                <div class="item-text"><h4>Investor Pitch</h4><p>Yesterday</p></div>
+                <button class="item-btn"><i class="fa-solid fa-play"></i></button>
+            </div>
+        </div>
+
+        <!-- Recordings -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title"><i class="fa-solid fa-microphone"></i> Recordings</div>
+                <a href="#" class="view-link">View All</a>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="item-text"><h4>Client Discovery</h4><p>45 min</p></div>
+                <button class="item-btn"><i class="fa-solid fa-play"></i></button>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="item-text"><h4>Team Standup</h4><p>30 min</p></div>
+                <button class="item-btn"><i class="fa-solid fa-play"></i></button>
+            </div>
+        </div>
+
+        <!-- Blogs -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title"><i class="fa-solid fa-newspaper"></i

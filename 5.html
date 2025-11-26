@@ -1,0 +1,568 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modern Blue Gradient Landing - Blogs, Calls &amp; Decks Details</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0e2a70, #1951c6);
+            color: #e2eaff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1140px;
+            width: 92%;
+            margin: 50px auto 100px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(145deg, #14366a, #1c5be3);
+            border-radius: 36px;
+            padding: 56px 48px 64px;
+            box-shadow: 0 0 60px rgb(30 70 210 / 0.9), inset 0 0 120px 60px rgb(30 80 230 / 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+            user-select: none;
+        }
+
+        .hero-text {
+            flex: 1 1 50%;
+            user-select: text;
+        }
+
+        .hero-text h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #a6c8ff;
+            text-shadow: 0 0 18px #3e81ffcc;
+            margin-bottom: 14px;
+        }
+
+        .hero-text p {
+            font-weight: 400;
+            font-size: 1.1rem;
+            max-width: 560px;
+            color: #cbdcffcc;
+            margin-bottom: 38px;
+            line-height: 1.5;
+            text-shadow: 0 0 5px #4370eaaa;
+        }
+
+        /* Modern Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255 255 255 / 0.12);
+            border-radius: 42px;
+            padding: 14px 24px;
+            max-width: 580px;
+            box-shadow: inset 0 0 30px #5a89f755;
+        }
+
+        .search-bar input[type="text"] {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ddeaff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 42px;
+            text-shadow: 0 0 8px #4b7efb;
+            user-select: text;
+        }
+
+        .search-bar input[type="text"]::placeholder {
+            font-weight: 400;
+            color: #aac4ffcc;
+        }
+
+        .search-bar button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #9dbbffcc;
+            font-size: 26px;
+            padding: 0 12px 3px 12px;
+            transition: color 0.3s ease;
+        }
+
+        .search-bar button:hover,
+        .search-bar button:focus {
+            color: #dbe9ff;
+            outline: none;
+        }
+
+        .hero-img {
+            flex: 1 1 45%;
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 18px 48px rgba(17, 75, 140, 0.9);
+        }
+
+        .hero-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 0 12px #3670f4aa);
+            user-select: none;
+        }
+
+        .features-overlay {
+            position: absolute;
+            right: 16px;
+            top: 16%;
+            background: rgba(255 255 255 / 0.15);
+            backdrop-filter: blur(18px);
+            border-radius: 40px;
+            padding: 32px 40px;
+            box-shadow: 0 0 40px #63a0ff88;
+            color: #d9e8ffcc;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .features-overlay p {
+            margin-bottom: 18px;
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .features-overlay p:last-child {
+            margin-bottom: 0;
+        }
+
+        .features-overlay p::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: '\f058';
+            /* check icon */
+            position: absolute;
+            left: 8px;
+            top: 2px;
+            color: #4a91ffdd;
+            font-size: 1.4rem;
+            text-shadow: 0 0 6px #3c79ffbb;
+        }
+
+        /* Section titles */
+        h2.section-title {
+            font-size: 2.7rem;
+            margin-bottom: 36px;
+            color: #bdd5ff;
+            text-shadow: 0 0 10px #3779f9cc;
+            user-select: none;
+        }
+
+        /* Section container */
+        section.details-section {
+            margin-top: 80px;
+        }
+
+        /* Card style wrapper per section */
+        .details-wrapper {
+            background: linear-gradient(145deg, #244b93, #3b6dea);
+            border-radius: 32px;
+            padding: 40px 48px;
+            box-shadow: 0 6px 30px rgb(30 70 210 / 0.7);
+        }
+
+        /* List container for items */
+        .list-container {
+            margin-top: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: #6390ff33 transparent;
+        }
+
+        .list-container::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        .list-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .list-container::-webkit-scrollbar-thumb {
+            background-color: #6390ff55;
+            border-radius: 8px;
+        }
+
+        /* Each item */
+        .item {
+            background: rgba(255 255 255 / 0.08);
+            border-radius: 20px;
+            padding: 20px 28px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 20px rgba(50, 100, 230, 0.2);
+            display: grid;
+            grid-template-columns: 48px 1fr 130px;
+            grid-gap: 18px;
+            align-items: center;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .item:hover {
+            background: rgba(255 255 255 / 0.18);
+            box-shadow: 0 8px 30px rgba(47, 90, 230, 0.65);
+        }
+
+        .item:focus-within {
+            outline: 2px solid #6299ff;
+            outline-offset: 3px;
+        }
+
+        /* Icon column */
+        .item-icon {
+            color: #8db8ffcc;
+            font-size: 28px;
+            filter: drop-shadow(0 0 6px #5c8bffaa);
+            justify-self: center;
+        }
+
+        /* Content column */
+        .item-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #dbe6ffcc;
+            margin-bottom: 8px;
+        }
+
+        .item-subtitle {
+            font-size: 0.9rem;
+            color: #aac1ffcc;
+        }
+
+        /* Meta time or date */
+        .item-meta {
+            font-size: 0.85rem;
+            color: #9fb7ffcc;
+            font-weight: 500;
+            justify-self: end;
+            white-space: nowrap;
+            text-align: right;
+        }
+
+        /* Scrollable vertical with subtle fade effects */
+        .list-container::before,
+        .list-container::after {
+            content: "";
+            position: sticky;
+            left: 0;
+            right: 0;
+            height: 24px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .list-container::before {
+            top: 0;
+            background: linear-gradient(to bottom, rgba(36, 75, 147, 0.9), transparent);
+        }
+
+        .list-container::after {
+            bottom: 0;
+            background: linear-gradient(to top, rgba(36, 75, 147, 0.9), transparent);
+        }
+
+        /* Section subtitles */
+        .section-subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b6ccffcc;
+            margin-bottom: 20px;
+            user-select: none;
+        }
+
+        /* Flex container for grids on large */
+        .flex-row {
+            display: flex;
+            gap: 40px;
+            flex-wrap: nowrap;
+        }
+
+        .flex-col {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1016px) {
+            .hero {
+                flex-direction: column;
+                padding: 40px 30px 48px;
+            }
+
+            .hero-text,
+            .hero-img {
+                flex: none;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .features-overlay {
+                position: static;
+                background: rgba(255 255 255 / 0.12);
+                backdrop-filter: blur(12px);
+                box-shadow: 0 0 20px #5386ff82;
+                color: #c9dbffcc;
+                border-radius: 28px;
+                padding: 24px 28px;
+                margin-top: 26px;
+                max-width: none;
+                width: 100%;
+                font-size: 0.9rem;
+            }
+
+            .details-wrapper {
+                padding: 24px 30px;
+            }
+
+            .flex-row {
+                flex-direction: column;
+                gap: 36px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" role="main" aria-label="Detailed landing page for Blogs, Call Recordings and Decks">
+
+        <!-- Hero Section -->
+        <section class="hero" aria-label="Landing introduction and search">
+            <div class="hero-text">
+                <h1>Explore The World With Us!</h1>
+                <p>Plan your next adventure with personalized travel packages, seamless bookings, and unforgettable
+                    experiences. Discover our blogs, call recordings, and interactive decks designed for you.</p>
+                <form class="search-bar" role="search" aria-label="Search site content">
+                    <input type="text" placeholder="Search articles, calls, decks..." aria-label="Search site content">
+                    <button type="button" aria-label="Activate voice search" title="Voice search"><i
+                            class="fa-solid fa-microphone"></i></button>
+                </form>
+            </div>
+            <div class="hero-img" aria-hidden="true">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
+                    alt="Happy travelers excited for trip">
+                <div class="features-overlay" aria-label="Key features">
+                    <p>500+ Destinations Worldwide</p>
+                    <p>Customized Travel Packages</p>
+                    <p>24/7 Support for Travelers</p>
+                    <p>Safe and Secure Experiences</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Sections -->
+        <section class="details-section" aria-label="Call Recordings">
+            <h2 class="section-title">Call Recordings</h2>
+            <div class="details-wrapper">
+                <p class="section-subtitle">Review and manage your recent client and support calls</p>
+                <div class="list-container" tabindex="0" aria-label="List of recent call recordings">
+                    <article class="item" tabindex="0" aria-labelledby="call1-title call1-meta">
+                        <div class="item-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="item-content">
+                            <h3 id="call1-title" class="item-title">Call with Travel Agent</h3>
+                            <p class="item-subtitle">Discussed itinerary for July 2024 Europe trip</p>
+                        </div>
+                        <time id="call1-meta" class="item-meta" datetime="2024-07-12">Jul 12, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="call2-title call2-meta">
+                        <div class="item-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="item-content">
+                            <h3 id="call2-title" class="item-title">Client Inquiry: Paris Tour</h3>
+                            <p class="item-subtitle">Answered questions about available packages and booking options</p>
+                        </div>
+                        <time id="call2-meta" class="item-meta" datetime="2024-07-10">Jul 10, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="call3-title call3-meta">
+                        <div class="item-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="item-content">
+                            <h3 id="call3-title" class="item-title">Support Follow-up Call</h3>
+                            <p class="item-subtitle">Provided additional info on travel insurance and services</p>
+                        </div>
+                        <time id="call3-meta" class="item-meta" datetime="2024-06-20">Jun 20, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="call4-title call4-meta">
+                        <div class="item-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="item-content">
+                            <h3 id="call4-title" class="item-title">Package Discussion</h3>
+                            <p class="item-subtitle">Discussed family vacation details and custom requests</p>
+                        </div>
+                        <time id="call4-meta" class="item-meta" datetime="2024-06-29">Jun 29, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="call5-title call5-meta">
+                        <div class="item-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="item-content">
+                            <h3 id="call5-title" class="item-title">Feedback Call</h3>
+                            <p class="item-subtitle">Received valuable feedback on travel experience</p>
+                        </div>
+                        <time id="call5-meta" class="item-meta" datetime="2024-06-14">Jun 14, 2024</time>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="details-section" aria-label="Blogs">
+            <h2 class="section-title">Blogs</h2>
+            <div class="details-wrapper">
+                <p class="section-subtitle">Read our most popular travel blogs, guides, and tips</p>
+                <div class="list-container" tabindex="0" aria-label="List of popular blog articles">
+                    <article class="item" tabindex="0" aria-labelledby="blog1-title blog1-meta">
+                        <div class="item-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                        <div class="item-content">
+                            <h3 id="blog1-title" class="item-title">10 Tips for Stress-Free Travel</h3>
+                            <p class="item-subtitle">Learn strategies to keep calm and enjoy your trip.</p>
+                        </div>
+                        <time id="blog1-meta" class="item-meta" datetime="2024-05-20">May 20, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="blog2-title blog2-meta">
+                        <div class="item-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                        <div class="item-content">
+                            <h3 id="blog2-title" class="item-title">Hidden Gems in Europe You Must Visit</h3>
+                            <p class="item-subtitle">Discover less crowded but breathtaking locations in Europe.</p>
+                        </div>
+                        <time id="blog2-meta" class="item-meta" datetime="2024-04-18">Apr 18, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="blog3-title blog3-meta">
+                        <div class="item-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                        <div class="item-content">
+                            <h3 id="blog3-title" class="item-title">Packing Like a Pro: Essentials to Bring</h3>
+                            <p class="item-subtitle">Smart packing tips for any kind of travel.</p>
+                        </div>
+                        <time id="blog3-meta" class="item-meta" datetime="2024-04-07">Apr 07, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="blog4-title blog4-meta">
+                        <div class="item-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                        <div class="item-content">
+                            <h3 id="blog4-title" class="item-title">Cultural Etiquettes Around the World</h3>
+                            <p class="item-subtitle">Avoid faux pas and make the most of your cultural experiences.</p>
+                        </div>
+                        <time id="blog4-meta" class="item-meta" datetime="2024-03-30">Mar 30, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="blog5-title blog5-meta">
+                        <div class="item-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                        <div class="item-content">
+                            <h3 id="blog5-title" class="item-title">How to Choose Sustainable Tourism</h3>
+                            <p class="item-subtitle">Travel responsibly and support the planet.</p>
+                        </div>
+                        <time id="blog5-meta" class="item-meta" datetime="2024-03-15">Mar 15, 2024</time>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="details-section" aria-label="Decks">
+            <h2 class="section-title">Decks</h2>
+            <div class="details-wrapper">
+                <p class="section-subtitle">Organize your trips and plans with these engaging decks</p>
+                <div class="list-container" tabindex="0" aria-label="List of travel decks and itineraries">
+                    <article class="item" tabindex="0" aria-labelledby="deck1-title deck1-meta">
+                        <div class="item-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="item-content">
+                            <h3 id="deck1-title" class="item-title">Summer 2024 Europe Trip</h3>
+                            <p class="item-subtitle">Multi-country itinerary across France, Italy &amp; Germany.</p>
+                        </div>
+                        <time id="deck1-meta" class="item-meta" datetime="2024-06-01">Updated Jun 1, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="deck2-title deck2-meta">
+                        <div class="item-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="item-content">
+                            <h3 id="deck2-title" class="item-title">Asia Adventure 2023</h3>
+                            <p class="item-subtitle">Exploring Thailand, Vietnam &amp; Cambodia highlights.</p>
+                        </div>
+                        <time id="deck2-meta" class="item-meta" datetime="2023-12-15">Updated Dec 15, 2023</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="deck3-title deck3-meta">
+                        <div class="item-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="item-content">
+                            <h3 id="deck3-title" class="item-title">Family Vacation Special</h3>
+                            <p class="item-subtitle">Kid-friendly resorts and activities across the Caribbean.</p>
+                        </div>
+                        <time id="deck3-meta" class="item-meta" datetime="2024-01-22">Updated Jan 22, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="deck4-title deck4-meta">
+                        <div class="item-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="item-content">
+                            <h3 id="deck4-title" class="item-title">Honeymoon Highlights</h3>
+                            <p class="item-subtitle">Romantic spots &amp; experiences in the Maldives and Bora Bora.</p>
+                        </div>
+                        <time id="deck4-meta" class="item-meta" datetime="2024-02-18">Updated Feb 18, 2024</time>
+                    </article>
+
+                    <article class="item" tabindex="0" aria-labelledby="deck5-title deck5-meta">
+                        <div class="item-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="item-content">
+                            <h3 id="deck5-title" class="item-title">Cruising the Mediterranean</h3>
+                            <p class="item-subtitle">Detailed itinerary for a 10-day luxury cruise.</p>
+                        </div>
+                        <time id="deck5-meta" class="item-meta" datetime="2023-11-10">Updated Nov 10, 2023</time>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+</body>
+
+</html>
