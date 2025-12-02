@@ -1,0 +1,79 @@
+<div class="card-grid">
+            <article class="call-card" tabindex="0" aria-label="Monthly Sales Meeting Recording, 28 minutes">
+                <div class="call-header">
+                    <div class="call-icon" aria-hidden="true">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="call-info">
+                        <h3>Monthly Sales Meeting </h3>
+                        <p>Apr 20, 2024 · 5 Participants</p>
+                    </div>
+                </div>
+                <div class="waveform" aria-hidden="true">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+                <div class="call-footer">
+                    <span class="duration">28:30</span>
+                    <button class="play-btn" aria-label="Play Monthly Sales Meeting recording"><i class="fas fa-play"></i></button>
+                </div>
+            </article>
+
+            <article class="call-card" tabindex="0" aria-label="Product Demo Recording, 35 minutes">
+                <div class="call-header">
+                    <div class="call-icon" aria-hidden="true">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="call-info">
+                        <h3>Product Demo</h3>
+                        <p>Apr 18, 2024 · 3 Participants</p>
+                    </div>
+                </div>
+                <div class="waveform" aria-hidden="true">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+                <div class="call-footer">
+                    <span class="duration">35:12</span>
+                    <button class="play-btn" aria-label="Play Product Demo recording"><i class="fas fa-play"></i></button>
+                </div>
+            </article>
+
+            <article class="call-card" tabindex="0" aria-label="Product Demo Recording, 35 minutes">
+                <div class="call-header">
+                    <div class="call-icon" aria-hidden="true">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="call-info">
+                        <h3>Product Demo</h3>
+                        <p>Apr 18, 2024 · 3 Participants</p>
+                    </div>
+                </div>
+                <div class="waveform" aria-hidden="true">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+                <div class="call-footer">
+                    <span class="duration">35:12</span>
+                    <button class="play-btn" aria-label="Play Product Demo recording"><i class="fas fa-play"></i></button>
+                </div>
+            </article>
+            
+            
+            
+        </div>
