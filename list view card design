@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Recordings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* Section */
+        .recordings-section { max-width: 1200px; margin: 0 auto; }
+
+        /* Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title h2 { font-size: 1.5rem; color: #0a2540; }
+        .title-icon {
+            background: linear-gradient(135deg, #0466c8, #48a9e6);
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            box-shadow: 0 6px 18px rgba(4,102,200,0.3);
+        }
+        .badge {
+            background: #dbeafe;
+            color: #0b69ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Toggle Buttons */
+        .view-toggle {
+            display: flex;
+            gap: 6px;
+            background: #fff;
+            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .toggle-btn {
+            width: 40px; height: 40px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #606f85;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toggle-btn:hover { background: #f0f4f8; color: #0466c8; }
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #0466c8, #48a9e6);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(4,102,200,0.4);
+        }
+
+        /* Grid Container */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            transition: all 0.3s;
+        }
+        .card-grid.list-view {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        /* Card */
+        .call-card {
+            position: relative;
+            background: #fff;
+            border-radius: 18px;
+            padding: 22px 26px;
+            box-shadow: 0 10px 28px rgba(4,102,200,0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .call-card:hover {
+            box-shadow: 0 16px 40px rgba(4,102,200,0.18);
+            transform: translateY(-5px);
+        }
+        .list-view .call-card {
+            flex-direction: row;
+            align-items: center;
+            padding: 16px 24px;
+            gap: 24px;
+            border-radius: 14px;
+        }
+        .list-view .call-card:hover { transform: translateX(6px); }
+
+        /* Card Header */
+        .call-header { display: flex; align-items: center; gap: 14px; }
+        .list-view .call-header { min-width: 240px; }
+        .call-icon {
+            background: linear-gradient(135deg, #0466c8, #48a9e6);
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(4,102,200,0.3);
+        }
+        .list-view .call-icon { width: 44px; height: 44px; font-size: 18px; }
+        .call-info h3 { font-size: 1.05rem; color: #0a2540; margin-bottom: 4px; }
+        .call-info p { font-size: 0.85rem; color: #606f85; }
+
+        /* Type Badge */
+        .call-type {
+            position: absolute;
+            top: 14px; right: 14px;
+            padding: 3px 10px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .type-audio { background: #dcfce7; color: #16a34a; }
+        .type-video { background: #fef3c7; color: #d97706; }
+        .list-view .call-type { position: static; order: 3; }
+
+        /* Waveform */
+        .waveform {
+            display: flex;
+            gap: 4px;
+            height: 30px;
+            align-items: center;
+        }
+        .list-view .waveform { flex: 1; max-width: 200px; }
+        .wave-bar {
+            width: 5px;
+            border-radius: 3px;
+            background: #dbeafe;
+            animation: wave 1.8s ease-in-out infinite alternate;
+        }
+        .wave-bar:nth-child(1) { animation-delay: 0s; }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.6s; }
+        .wave-bar:nth-child(6) { animation-delay: 0.75s; }
+        .wave-bar:nth-child(7) { animation-delay: 0.9s; }
+        @keyframes wave {
+            0% { height: 8px; background: #dbeafe; }
+            50% { height: 24px; background: #186df2; }
+            100% { height: 10px; background: #dbeafe; }
+        }
+
+        /* Footer */
+        .call-footer { display: flex; justify-content: space-between; align-items: center; }
+        .list-view .call-footer { margin-left: auto; gap: 16px; }
+        .duration {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0b69ff;
+            background: #dbeafe;
+            padding: 5px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .play-btn {
+            background: linear-gradient(135deg, #0b69ff, #004a94);
+            border: none;
+            color: #fff;
+            border-radius: 50%;
+            width: 46px; height: 46px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(4,102,200,0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .list-view .play-btn { width: 40px; height: 40px; font-size: 14px; }
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(4,102,200,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .list-view .call-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .list-view .call-header { min-width: auto; }
+            .list-view .waveform { max-width: 100%; width: 100%; }
+            .list-view .call-footer { width: 100%; margin-left: 0; }
+            .list-view .call-type { position: absolute; top: 14px; right: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="recordings-section">
+    <!-- Header -->
+    <div class="section-header">
+        <div class="section-title">
+            <div class="title-icon"><i class="fas fa-record-vinyl"></i></div>
+            <h2>Call Recordings</h2>
+            <span class="badge">3 recordings</span>
+        </div>
+        <div class="view-toggle">
+            <button class="toggle-btn active" id="gridBtn" title="Grid View">
+                <i class="fas fa-th-large"></i>
+            </button>
+            <button class="toggle-btn" id="listBtn" title="List View">
+                <i class="fas fa-list"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="card-grid" id="cardContainer">
+        <!-- Card 1 -->
+        <article class="call-card">
+            <span class="call-type type-audio">Audio</span>
+            <div class="call-header">
+                <div class="call-icon"><i class="fas fa-phone-alt"></i></div>
+                <div class="call-info">
+                    <h3>Monthly Sales Meeting</h3>
+                    <p>Apr 20, 2024 · 5 Participants</p>
+                </div>
+            </div>
+            <div class="waveform">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+            <div class="call-footer">
+                <span class="duration"><i class="far fa-clock"></i> 28:30</span>
+                <button class="play-btn"><i class="fas fa-play"></i></button>
+            </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="call-card">
+            <span class="call-type type-video">Video</span>
+            <div class="call-header">
+                <div class="call-icon"><i class="fas fa-video"></i></div>
+                <div class="call-info">
+                    <h3>Product Demo</h3>
+                    <p>Apr 18, 2024 · 3 Participants</p>
+                </div>
+            </div>
+            <div class="waveform">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+            <div class="call-footer">
+                <span class="duration"><i class="far fa-clock"></i> 35:12</span>
+                <button class="play-btn"><i class="fas fa-play"></i></button>
+            </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="call-card">
+            <span class="call-type type-audio">Audio</span>
+            <div class="call-header">
+                <div class="call-icon"><i class="fas fa-headset"></i></div>
+                <div class="call-info">
+                    <h3>Client Support Call</h3>
+                    <p>Apr 15, 2024 · 2 Participants</p>
+                </div>
+            </div>
+            <div class="waveform">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+            <div class="call-footer">
+                <span class="duration"><i class="far fa-clock"></i> 12:45</span>
+                <button class="play-btn"><i class="fas fa-play"></i></button>
+            </div>
+        </article>
+    </div>
+</section>
+
+<script>
+    // Elements
+    const gridBtn = document.getElementById('gridBtn');
+    const listBtn = document.getElementById('listBtn');
+    const cardContainer = document.getElementById('cardContainer');
+
+    // Grid View
+    gridBtn.addEventListener('click', () => {
+        cardContainer.classList.remove('list-view');
+        gridBtn.classList.add('active');
+        listBtn.classList.remove('active');
+        localStorage.setItem('viewMode', 'grid');
+    });
+
+    // List View
+    listBtn.addEventListener('click', () => {
+        cardContainer.classList.add('list-view');
+        listBtn.classList.add('active');
+        gridBtn.classList.remove('active');
+        localStorage.setItem('viewMode', 'list');
+    });
+
+    // Load saved preference
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedView = localStorage.getItem('viewMode');
+        if (savedView === 'list') {
+            listBtn.click();
+        }
+    });
+</script>
+
+</body>
+</html>
