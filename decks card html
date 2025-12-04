@@ -1,0 +1,14 @@
+<article class="deck-card" tabindex="0" aria-label="Deck: Q1 Sales Review Presentation">
+        <div class="deck-preview" aria-hidden="true">
+          <span class="deck-type">Sales</span>
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="deck-content">
+          <h3 class="deck-title">Q1 Sales Review</h3>
+          <p class="deck-desc">Overview of Q1 sales performance and future strategy.</p>
+          <div class="deck-footer">
+            <span><i class="fas fa-users"></i> 8 Contributors</span>
+            <button class="deck-btn" aria-label="Open Q1 Sales Review deck">→</button>
+          </div>
+        </div>
+      </article>
