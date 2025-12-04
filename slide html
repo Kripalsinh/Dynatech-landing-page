@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Recordings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;min-height:100vh;padding:30px 20px}
+        .section{max-width:1200px;margin:0 auto}
+        
+        /* Header */
+        .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+        .title{display:flex;align-items:center;gap:10px}
+        .title h2{font-size:1.4rem;color:#0a2540}
+        .title-icon{background:linear-gradient(135deg,#0466c8,#48a9e6);width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+        .badge{background:#dbeafe;color:#0b69ff;padding:4px 10px;border-radius:16px;font-size:0.75rem;font-weight:600}
+        
+        /* Controls */
+        .controls{display:flex;align-items:center;gap:12px}
+        .view-toggle{display:flex;gap:4px;background:#fff;padding:4px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .toggle-btn{width:36px;height:36px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#606f85;font-size:14px;transition:all 0.3s}
+        .toggle-btn:hover{background:#f0f4f8;color:#0466c8}
+        .toggle-btn.active{background:linear-gradient(135deg,#0466c8,#48a9e6);color:#fff}
+        
+        /* Navigation */
+        .nav{display:flex;gap:6px;align-items:center}
+        .nav.hidden{display:none}
+        .nav-btn{width:36px;height:36px;border:2px solid #e2e8f0;background:#fff;border-radius:50%;cursor:pointer;color:#0466c8;font-size:14px;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+        .nav-btn:hover:not(:disabled){background:#0466c8;color:#fff;border-color:#0466c8}
+        .nav-btn:disabled{opacity:0.4;cursor:not-allowed}
+        .page-info{font-size:0.8rem;color:#606f85;min-width:40px;text-align:center}
+        
+        /* Slider */
+        .slider{overflow:hidden}
+        .slider-track{display:flex;transition:transform 0.4s ease}
+        .slide{min-width:100%;padding:2px}
+        
+        /* Grid */
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+        .grid.list{grid-template-columns:1fr;gap:12px}
+        
+        /* Card */
+        .card{background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 4px 15px rgba(0,0,0,0.08);transition:all 0.3s;display:flex;flex-direction:column;gap:12px}
+        .card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,0.12)}
+        .list .card{flex-direction:row;align-items:center;gap:20px;padding:14px 20px}
+        .list .card:hover{transform:translateX(4px)}
+        
+        /* Card Content */
+        .card-header{display:flex;align-items:center;gap:12px}
+        .list .card-header{min-width:200px}
+        .icon{background:linear-gradient(135deg,#0466c8,#48a9e6);width:44px;height:44px;border-radius:10px;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center}
+        .list .icon{width:38px;height:38px;font-size:16px}
+        .info h3{font-size:0.95rem;color:#0a2540;margin-bottom:2px}
+        .info p{font-size:0.8rem;color:#606f85}
+        .card-footer{display:flex;justify-content:space-between;align-items:center}
+        .list .card-footer{margin-left:auto;gap:12px}
+        .duration{font-size:0.8rem;color:#0b69ff;background:#dbeafe;padding:4px 12px;border-radius:16px;font-weight:600}
+        .play-btn{background:linear-gradient(135deg,#0b69ff,#004a94);border:none;color:#fff;border-radius:50%;width:38px;height:38px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.3s}
+        .play-btn:hover{transform:scale(1.1)}
+        
+        /* Dots */
+        .dots{display:flex;justify-content:center;gap:6px;margin-top:20px}
+        .dots.hidden{display:none}
+        .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;cursor:pointer;transition:all 0.3s}
+        .dot.active{background:#0466c8;width:24px;border-radius:4px}
+        
+        /* Responsive */
+        @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:600px){.grid{grid-template-columns:1fr}.header{flex-direction:column;align-items:flex-start}.controls{width:100%;justify-content:space-between}}
+    </style>
+</head>
+<body>
+
+<section class="section">
+    <!-- Header -->
+    <div class="header">
+        <div class="title">
+            <div class="title-icon"><i class="fas fa-record-vinyl"></i></div>
+            <h2>Call Recordings</h2>
+            <span class="badge" id="badge">7 recordings</span>
+        </div>
+        <div class="controls">
+            <div class="view-toggle">
+                <button class="toggle-btn active" id="gridBtn"><i class="fas fa-th-large"></i></button>
+                <button class="toggle-btn" id="listBtn"><i class="fas fa-list"></i></button>
+            </div>
+            <div class="nav" id="nav">
+                <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <span class="page-info" id="pageInfo">1/2</span>
+                <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="slider">
+        <div class="slider-track" id="track"></div>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots" id="dots"></div>
+</section>
+
+<script>
+// Data - 7 items
+const data = [
+    { title: "Sales Meeting", date: "Apr 20", duration: "28:30", icon: "fa-phone-alt" },
+    { title: "Product Demo", date: "Apr 18", duration: "35:12", icon: "fa-video" },
+    { title: "Support Call", date: "Apr 15", duration: "12:45", icon: "fa-headset" },
+    { title: "Team Standup", date: "Apr 14", duration: "15:20", icon: "fa-users" },
+    { title: "Interview", date: "Apr 12", duration: "45:00", icon: "fa-user-tie" },
+    { title: "Training", date: "Apr 10", duration: "60:00", icon: "fa-chalkboard-teacher" },
+    { title: "Review Call", date: "Apr 08", duration: "52:30", icon: "fa-chart-line" }
+];
+
+// Config
+const PER_PAGE = 6;
+let page = 0;
+let totalPages = Math.ceil(data.length / PER_PAGE);
+let isListView = false;
+
+// Elements
+const track = document.getElementById('track');
+const dots = document.getElementById('dots');
+const nav = document.getElementById('nav');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const pageInfo = document.getElementById('pageInfo');
+const gridBtn = document.getElementById('gridBtn');
+const listBtn = document.getElementById('listBtn');
+const badge = document.getElementById('badge');
+
+// Create card HTML
+function createCard(item) {
+    return `
+        <article class="card">
+            <div class="card-header">
+                <div class="icon"><i class="fas ${item.icon}"></i></div>
+                <div class="info">
+                    <h3>${item.title}</h3>
+                    <p>${item.date}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="duration">${item.duration}</span>
+                <button class="play-btn"><i class="fas fa-play"></i></button>
+            </div>
+        </article>
+    `;
+}
+
+// Build slides
+function buildSlides() {
+    track.innerHTML = '';
+    dots.innerHTML = '';
+    
+    for (let i = 0; i < totalPages; i++) {
+        const start = i * PER_PAGE;
+        const end = start + PER_PAGE;
+        const items = data.slice(start, end);
+        
+        const slide = document.createElement('div');
+        slide.className = 'slide';
+        slide.innerHTML = `<div class="grid${isListView ? ' list' : ''}">${items.map(createCard).join('')}</div>`;
+        track.appendChild(slide);
+        
+        // Create dot
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => goToPage(i);
+        dots.appendChild(dot);
+    }
+    
+    updateUI();
+}
+
+// Go to page
+function goToPage(p) {
+    page = p;
+    track.style.transform = `translateX(-${page * 100}%)`;
+    updateUI();
+}
+
+// Update UI
+function updateUI() {
+    // Update buttons
+    prevBtn.disabled = page === 0;
+    nextBtn.disabled = page === totalPages - 1;
+    
+    // Update page info
+    pageInfo.textContent = `${page + 1}/${totalPages}`;
+    
+    // Update dots
+    document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === page);
+    });
+    
+    // Show/hide nav and dots
+    const showNav = totalPages > 1;
+    nav.classList.toggle('hidden', !showNav);
+    dots.classList.toggle('hidden', !showNav);
+    
+    // Update badge
+    badge.textContent = `${data.length} recordings`;
+}
+
+// Toggle view
+function setView(list) {
+    isListView = list;
+    gridBtn.classList.toggle('active', !list);
+    listBtn.classList.toggle('active', list);
+    
+    document.querySelectorAll('.grid').forEach(g => {
+        g.classList.toggle('list', list);
+    });
+    
+    localStorage.setItem('viewMode', list ? 'list' : 'grid');
+}
+
+// Event listeners
+prevBtn.onclick = () => page > 0 && goToPage(page - 1);
+nextBtn.onclick = () => page < totalPages - 1 && goToPage(page + 1);
+gridBtn.onclick = () => setView(false);
+listBtn.onclick = () => setView(true);
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && page > 0) goToPage(page - 1);
+    if (e.key === 'ArrowRight' && page < totalPages - 1) goToPage(page + 1);
+});
+
+// Touch/Swipe support
+let touchStartX = 0;
+let touchEndX = 0;
+
+track.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+track.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+        if (diff > 0 && page < totalPages - 1) goToPage(page + 1);
+        if (diff < 0 && page > 0) goToPage(page - 1);
+    }
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    buildSlides();
+    
+    // Load saved view
+    if (localStorage.getItem('viewMode') === 'list') {
+        setView(true);
+    }
+});
+</script>
+
+</body>
+</html>
