@@ -1,0 +1,215 @@
+// ========== DATA ==========
+const recordingsData = [
+    { title: "Sales Meeting", date: "Apr 20", duration: "28:30", icon: "fa-phone-alt" },
+    { title: "Product Demo", date: "Apr 18", duration: "35:12", icon: "fa-video" },
+    { title: "Support Call", date: "Apr 15", duration: "12:45", icon: "fa-headset" },
+    { title: "Team Standup", date: "Apr 14", duration: "15:20", icon: "fa-users" },
+    { title: "Interview", date: "Apr 12", duration: "45:00", icon: "fa-user-tie" },
+    { title: "Training", date: "Apr 10", duration: "60:00", icon: "fa-chalkboard-teacher" },
+    { title: "Review Call", date: "Apr 08", duration: "52:30", icon: "fa-chart-line" }
+];
+
+const decksData = [
+    { title: "Q1 Sales Review", desc: "Overview of Q1 sales performance.", type: "Sales", icon: "fa-chart-line", contributors: 8 },
+    { title: "Product Roadmap", desc: "2024 product development timeline.", type: "Product", icon: "fa-road", contributors: 5 },
+    { title: "Marketing Plan", desc: "Digital marketing strategy.", type: "Marketing", icon: "fa-bullhorn", contributors: 4 },
+    { title: "Team Onboarding", desc: "New employee onboarding materials.", type: "HR", icon: "fa-user-plus", contributors: 3 },
+    { title: "Tech Architecture", desc: "System architecture overview.", type: "Tech", icon: "fa-server", contributors: 6 },
+    { title: "Budget Report", desc: "Annual budget allocation.", type: "Finance", icon: "fa-dollar-sign", contributors: 2 },
+    { title: "Design System", desc: "UI components and brand guidelines.", type: "Design", icon: "fa-palette", contributors: 4 },
+    { title: "Customer Research", desc: "User feedback and insights.", type: "Research", icon: "fa-search", contributors: 5 }
+];
+
+const blogsData = [
+    { title: "Improving Client Communication", desc: "Strategies to connect with clients.", icon: "fa-comments", author: "Admin", date: "Apr 1, 2024" },
+    { title: "Mastering Remote Work", desc: "Best practices for remote teams.", icon: "fa-laptop-house", author: "John Doe", date: "Mar 28, 2024" },
+    { title: "Data Security Tips", desc: "Protect your business data.", icon: "fa-shield-alt", author: "Jane Smith", date: "Mar 25, 2024" },
+    { title: "Building Effective Teams", desc: "Create high-performing teams.", icon: "fa-users", author: "Mike Johnson", date: "Mar 22, 2024" },
+    { title: "Digital Marketing Trends", desc: "Latest marketing strategies.", icon: "fa-chart-line", author: "Sarah Lee", date: "Mar 20, 2024" },
+    { title: "Project Management Tips", desc: "Manage projects efficiently.", icon: "fa-tasks", author: "Tom Brown", date: "Mar 18, 2024" },
+    { title: "Customer Success Stories", desc: "Real-world client examples.", icon: "fa-trophy", author: "Admin", date: "Mar 15, 2024" }
+];
+
+// ========== CARD TEMPLATES ==========
+function createRecordingCard(item) {
+    return `
+        <article class="card call-card">
+            <div class="call-top">
+                <div class="call-icon"><i class="fas ${item.icon}"></i></div>
+                <div class="call-info">
+                    <h3>${item.title}</h3>
+                    <p>${item.date}</p>
+                </div>
+            </div>
+            <div class="wave">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+            <div class="call-bottom">
+                <span class="dur">${item.duration}</span>
+                <button class="play"><i class="fas fa-play"></i></button>
+            </div>
+        </article>
+    `;
+}
+
+function createDeckCard(item) {
+    return `
+        <article class="card deck-card">
+            <div class="deck-top">
+                <span class="deck-tag">${item.type}</span>
+                <i class="fas ${item.icon}"></i>
+            </div>
+            <div class="deck-body">
+                <h3>${item.title}</h3>
+                <p>${item.desc}</p>
+                <div class="deck-foot">
+                    <span><i class="fas fa-users"></i> ${item.contributors}</span>
+                    <span>→</span>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function createBlogCard(item) {
+    return `
+        <article class="card blog-card">
+            <div class="blog-top">
+                <i class="fas ${item.icon}"></i>
+            </div>
+            <div class="blog-body">
+                <h3>${item.title}</h3>
+                <p>${item.desc}</p>
+                <div class="blog-foot">
+                    <span><i class="fas fa-user"></i> ${item.author}</span>
+                    <span><i class="fas fa-calendar"></i> ${item.date}</span>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+// ========== SLIDER CLASS ==========
+class SectionSlider {
+    constructor(sectionId, data, cardTemplate, perPage = 6) {
+        this.section = document.getElementById(sectionId);
+        this.data = data;
+        this.cardTemplate = cardTemplate;
+        this.perPage = perPage;
+        this.page = 0;
+        this.totalPages = Math.ceil(data.length / perPage);
+        this.isListView = false;
+
+        this.track = this.section.querySelector('[data-track]');
+        this.dotsContainer = this.section.querySelector('[data-dots]');
+        this.nav = this.section.querySelector('.nav');
+        this.prevBtn = this.section.querySelector('[data-prev]');
+        this.nextBtn = this.section.querySelector('[data-next]');
+        this.pageInfo = this.section.querySelector('[data-page]');
+        this.badge = this.section.querySelector('[data-count]');
+        this.gridBtn = this.section.querySelector('[data-view="grid"]');
+        this.listBtn = this.section.querySelector('[data-view="list"]');
+
+        this.init();
+    }
+
+    init() {
+        this.render();
+        this.updateUI();
+        this.attachEvents();
+    }
+
+    render() {
+        this.track.innerHTML = '';
+        this.dotsContainer.innerHTML = '';
+
+        for (let i = 0; i < this.totalPages; i++) {
+            const start = i * this.perPage;
+            const end = start + this.perPage;
+            const items = this.data.slice(start, end);
+
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            const gridClass = this.isListView ? 'grid list' : 'grid';
+            slide.innerHTML = `<div class="${gridClass}">${items.map(this.cardTemplate).join('')}</div>`;
+            this.track.appendChild(slide);
+
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === this.page ? ' active' : '');
+            dot.addEventListener('click', () => this.goToPage(i));
+            this.dotsContainer.appendChild(dot);
+        }
+
+        this.track.style.transform = `translateX(-${this.page * 100}%)`;
+    }
+
+    goToPage(p) {
+        this.page = p;
+        this.track.style.transform = `translateX(-${this.page * 100}%)`;
+        this.updateUI();
+    }
+
+    updateUI() {
+        this.prevBtn.disabled = this.page === 0;
+        this.nextBtn.disabled = this.page === this.totalPages - 1;
+        this.pageInfo.textContent = `${this.page + 1}/${this.totalPages}`;
+        this.badge.textContent = this.data.length;
+
+        this.dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === this.page);
+        });
+
+        const showNav = this.totalPages > 1;
+        this.nav.classList.toggle('hidden', !showNav);
+        this.dotsContainer.classList.toggle('hidden', !showNav);
+    }
+
+    setView(isList) {
+        this.isListView = isList;
+        this.gridBtn.classList.toggle('active', !isList);
+        this.listBtn.classList.toggle('active', isList);
+        this.section.querySelectorAll('.grid').forEach(g => {
+            g.classList.toggle('list', isList);
+        });
+    }
+
+    attachEvents() {
+        this.prevBtn.addEventListener('click', () => {
+            if (this.page > 0) this.goToPage(this.page - 1);
+        });
+
+        this.nextBtn.addEventListener('click', () => {
+            if (this.page < this.totalPages - 1) this.goToPage(this.page + 1);
+        });
+
+        this.gridBtn.addEventListener('click', () => this.setView(false));
+        this.listBtn.addEventListener('click', () => this.setView(true));
+
+        let startX = 0;
+        let endX = 0;
+
+        this.track.addEventListener('touchstart', (e) => {
+            startX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        this.track.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].screenX;
+            const diff = startX - endX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && this.page < this.totalPages - 1) {
+                    this.goToPage(this.page + 1);
+                } else if (diff < 0 && this.page > 0) {
+                    this.goToPage(this.page - 1);
+                }
+            }
+        }, { passive: true });
+    }
+}
+
+// ========== INITIALIZE ==========
+document.addEventListener('DOMContentLoaded', () => {
+    new SectionSlider('recordings', recordingsData, createRecordingCard, 6);
+    new SectionSlider('decks', decksData, createDeckCard, 6);
+    new SectionSlider('blogs', blogsData, createBlogCard, 6);
+});
