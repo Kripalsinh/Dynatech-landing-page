@@ -1,0 +1,11 @@
+<article class="blog-card" tabindex="0" aria-label="Blog: Improving Client Communication">
+                <div class="blog-header" aria-hidden="true"><i class="fas fa-comments"></i></div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Improving Client Communication</h3>
+                    <p class="blog-desc">Strategies and tips to strengthen the way you connect with clients.</p>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-user"></i> Admin</span>
+                        <span><i class="fas fa-calendar"></i> Apr 1, 2024</span>
+                    </div>
+                </div>
+            </article>
