@@ -1,0 +1,100 @@
+/* Deck Cards */
+.deck-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 14px 40px rgb(4 102 200 / 0.18);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.deck-card:hover {
+  box-shadow: 0 20px 60px rgb(4 102 200 / 0.28);
+}
+
+.deck-preview {
+  height: 160px;
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(135deg, #0b69ff, #004a94);
+  color: white;
+  font-size: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+}
+
+.deck-type {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(6px);
+  user-select: none;
+}
+
+.deck-content {
+  padding: 24px 30px 30px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.deck-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+  color: #0a2540;
+}
+
+.deck-desc {
+  font-size: 0.95rem;
+  color: #65768e;
+  margin-bottom: 1.4rem;
+  line-height: 1.4;
+  min-height: 50px;
+}
+
+.deck-footer {
+  display: flex;
+  justify-content: space-between;
+  color: #a0adc2;
+  font-size: 0.9rem;
+}
+
+.deck-footer span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deck-footer i {
+  font-size: 14px;
+  color: #0b69ff;
+}
+
+.deck-btn {
+  background: transparent;
+  border: none;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #0b69ff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.deck-btn:hover {
+  color: #004a94;
+}
